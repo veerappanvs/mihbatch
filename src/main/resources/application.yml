@@ -1,0 +1,40 @@
+#logging:
+#  level:
+#    ROOT: DEBUG   
+#    org:
+#      springframework:
+#        web: DEBUG   
+#      hibernate: DEBUG   
+---
+spring:
+ profiles: local,default
+ datasource:
+  url: jdbc:sqlserver://10.200.7.220:1433;databaseName=MIH;integratedSecurity=true;
+  username: vsubramaniyan
+  password:
+  driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver    
+ jpa:
+  show-sql: true
+#   hibernate:
+#    ddl-auto: create-drop
+
+logging:
+ file:
+  logs/MIHOnline.log
+---
+spring:
+  profiles: prod
+  datasource:
+   url: jdbc:sqlserver://10.200.7.220:1433;databaseName=MIH;integratedSecurity=true;
+   username: vsubramaniyan
+   password:
+   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver    
+  jpa:
+   show-sql: true
+logging:
+ file:
+  logs/MIHOnline.log
+#   hibernate:
+#    dialect: SQLServer2012Dialect
+#     hbm2ddl:
+#      method: update
