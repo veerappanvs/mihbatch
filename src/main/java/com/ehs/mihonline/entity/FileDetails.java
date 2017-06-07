@@ -29,7 +29,7 @@ public class FileDetails {
 	 * @param uploadStatus
 	 * @param uploadComments
 	 */
-	public FileDetails(int applicationId, int uniqueid, String fileName, String createdBy, Date createdTime,
+	public FileDetails(int applicationId, String uniqueid, String fileName, String createdBy, Date createdTime,
 			String uploadStatus, String uploadComments) {
 		super();
 		this.applicationId = applicationId;
@@ -43,7 +43,7 @@ public class FileDetails {
 	
 	private int fileId;
 	private int applicationId;
-	private int uniqueid;
+	private String uniqueid;
 	private String fileName;
 	private String createdBy;
 	private Date createdTime;
@@ -82,13 +82,13 @@ public class FileDetails {
 	 * @return the uniqueid
 	 */
 	@Column(name="Unique_id")
-	public int getUniqueid() {
+	public String getUniqueid() {
 		return uniqueid;
 	}
 	/**
 	 * @param uniqueid the uniqueid to set
 	 */
-	public void setUniqueid(int uniqueid) {
+	public void setUniqueid(String uniqueid) {
 		this.uniqueid = uniqueid;
 	}
 	/**
@@ -168,7 +168,7 @@ public class FileDetails {
 		result = prime * result + ((createdTime == null) ? 0 : createdTime.hashCode());
 		result = prime * result + fileId;
 		result = prime * result + ((fileName == null) ? 0 : fileName.hashCode());
-		result = prime * result + uniqueid;
+		result = prime * result + ((uniqueid == null) ? 0 : uniqueid.hashCode()); ;
 		result = prime * result + ((uploadComments == null) ? 0 : uploadComments.hashCode());
 		result = prime * result + ((uploadStatus == null) ? 0 : uploadStatus.hashCode());
 		return result;

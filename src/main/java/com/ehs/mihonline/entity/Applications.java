@@ -352,8 +352,8 @@ public class Applications {
 				switch(applicationType)
 				{
 					case "1": return "Community";
-					case "2": return "Community2";
-					case "3": return "Community3";
+					case "2": return "MIH";
+					case "3": return "ED Avoidance";
 				}
 				return applicationType;
 	}

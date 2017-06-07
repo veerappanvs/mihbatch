@@ -1,8 +1,8 @@
-#logging:
-#  level:
+logging:
+  level:
 #    ROOT: DEBUG   
-#    org:
-#      springframework:
+    org:
+      springframework:
 #        web: DEBUG   
 #      hibernate: DEBUG   
 ---
@@ -17,6 +17,13 @@ spring:
   show-sql: true
 #   hibernate:
 #    ddl-auto: create-drop
+ mail:
+  properties:
+   mail:
+    smtp:
+     connecttimeout: 5000
+     timeout: 3000
+     writetimeout: 5000
 
 logging:
  file:
@@ -38,3 +45,5 @@ logging:
 #    dialect: SQLServer2012Dialect
 #     hbm2ddl:
 #      method: update
+
+

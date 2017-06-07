@@ -55,7 +55,7 @@ public class MapCommunityEmsData {
 	SimpleDateFormat sdf;
 	
 	@Transactional
-	public void mapDatatoModel(Map<String, String> formKeyValue) throws NumberFormatException, ParseException{
+	public void mapDatatoModel(Map<String, String> formKeyValue, FileDetails fd) throws NumberFormatException, ParseException{
 		
 		 sdf = new SimpleDateFormat("MM/dd/YYYY");
 		 //fieldNames = new CommunityEmsPDFFieldNames();
@@ -67,12 +67,16 @@ public class MapCommunityEmsData {
 		 logger.debug("Cli Phone================>"+fieldNames.getInp_sec1_person_cli_phone());
 		 
 		 
-		 mapApplicationToModel();
+		 Applications appl = mapApplicationToModel();
 		 mapAmbulancetoModel();
+		 fd.setApplicationId(appl.getAppId());
+		 fd.setUploadStatus("SUCCESS");
+		 fileDetailsRepository.saveAndFlush(fd);
+		 
 	}
 	
 	
-	public void mapApplicationToModel() throws NumberFormatException, ParseException{
+	public Applications mapApplicationToModel() throws NumberFormatException, ParseException{
 		 
 		Organization org = new Organization(formKeyValue.get(fieldNames.getInp_org_name()),
 											 formKeyValue.get(fieldNames.getInp_org_address_street()), 
@@ -96,17 +100,17 @@ public class MapCommunityEmsData {
 		 
 		 Applications appl = new Applications(pdfApplicationId,
 				 								org, 
-				 								sdf.parse(formKeyValue.get(fieldNames.getInp_date_submission())),
+				 								parseDate(formKeyValue.get(fieldNames.getInp_date_submission())),
 				 								contactPersonId, 
 				 								primaryMedicalDirectorId, 
-				 								sdf.parse(formKeyValue.get(fieldNames.getInp_sec1_prog_start_date())), 
+				 								parseDate( formKeyValue.get(fieldNames.getInp_sec1_prog_start_date())), 
 					 							Integer.parseInt(formKeyValue.get(fieldNames.getInp_num_ems())),  
 					 							Integer.parseInt(formKeyValue.get(fieldNames.getInp_num_emt())), 
 				 								formKeyValue.get(fieldNames.getInp_health_care_org()), 
 				 								formKeyValue.get(fieldNames.getInp_app_resubmission()),
 				 								formKeyValue.get(fieldNames.getInp_app_category()), 
 				 								new Date(), 
-					 							 new Date(),  
+					 							new Date(),  
 				 								System.getProperty("user.name"),  
 				 								new SimpleDateFormat("MM/dd/yyyy").parse(formKeyValue.get(fieldNames.getInp_date_submission())), 
 				 								"PENDING",
@@ -131,9 +135,10 @@ public class MapCommunityEmsData {
 		 
 		 for(Applications appls : applicationsRepository.findAll())
 		 {
-			 logger.debug("ambl value"+appls.toString());
+			 logger.debug("Applications Details"+appls.toString());
 		 }
 		 
+		 return appl;
 	}
 	
 	public void mapAmbulancetoModel(){
@@ -221,5 +226,11 @@ public class MapCommunityEmsData {
 		 }
 	}*/
 	
+	public Date parseDate(String date) throws ParseException
+	{
+		if (date != null)
+				return sdf.parse(date);
+		else return null;
+	}
 	
 }
