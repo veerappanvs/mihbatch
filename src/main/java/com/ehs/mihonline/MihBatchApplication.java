@@ -95,7 +95,8 @@ public class MihBatchApplication  implements CommandLineRunner{
 		 //file.renameTo(new File("C:\\Users\\vsubramaniyan\\workspace\\JavaPDF\\pdf_processing\\PROCESSED\\"+formKeyValue.get(fieldNames.getPdf_application_number()) + ".pdf"));
 		 
 		 //TODO comment should be removed
-		 file.renameTo(new File("O:\\MIH\\Processed\\"+formKeyValue.get(fieldNames.getPdf_application_number()) + ".pdf"));
+		 file.renameTo(new File("O:\\MIH\\Process\\"+formKeyValue.get(fieldNames.getPdf_application_number()) + ".pdf"));
+		 
 		 //mihEmail.send();
 		 }
 		 catch(Exception ex){

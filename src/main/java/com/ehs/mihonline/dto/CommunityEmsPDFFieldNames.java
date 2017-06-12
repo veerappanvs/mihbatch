@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:pdffieldmapping.properties")
 public class CommunityEmsPDFFieldNames {
 
-	@Value("${pdf_application_number}")
+	@Value("${inp_app_pdf_application_number}")
 	private String pdf_application_number;
 	
 	@Value("${inp_app_category}")
@@ -265,7 +265,7 @@ public class CommunityEmsPDFFieldNames {
 	@Value("${inp_sec4_attest_sign_person_title_2}")
 	private String  inp_sec4_attest_sign_person_title_2; 
 	
-	@Value("${file_date_time}")
+	@Value("${inp_app_file_date_time}")
 	private String  file_date_time;
 	
 
