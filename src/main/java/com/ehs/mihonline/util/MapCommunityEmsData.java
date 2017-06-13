@@ -60,7 +60,7 @@ public class MapCommunityEmsData {
 		 sdf = new SimpleDateFormat("MM/dd/YYYY");
 		 //fieldNames = new CommunityEmsPDFFieldNames();
 		 this.formKeyValue=formKeyValue;
-		 pdfApplicationId=formKeyValue.get(fieldNames.getPdf_application_number());
+		 pdfApplicationId=formKeyValue.get(fieldNames.getInp_app_pdf_application_number());
 		 logger.debug("Processing application ID================>"+pdfApplicationId);
 		 formKeyValue.get(fieldNames.getInp_date_submission());
 		 logger.debug("Input Date of submission================>"+fieldNames.getInp_date_submission());

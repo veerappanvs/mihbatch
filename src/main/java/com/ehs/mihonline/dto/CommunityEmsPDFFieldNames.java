@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:pdffieldmapping.properties")
 public class CommunityEmsPDFFieldNames {
 
-	@Value("${inp_app_pdf_application_number}")
-	private String pdf_application_number;
+	@Value("${inp_app_pdf_application_number_ro}")
+	private String inp_app_pdf_application_number;
 	
 	@Value("${inp_app_category}")
 	private String  inp_app_category; 
@@ -265,22 +265,22 @@ public class CommunityEmsPDFFieldNames {
 	@Value("${inp_sec4_attest_sign_person_title_2}")
 	private String  inp_sec4_attest_sign_person_title_2; 
 	
-	@Value("${inp_app_file_date_time}")
-	private String  file_date_time;
+	@Value("${inp_app_file_date_time_ro}")
+	private String  inp_app_file_date_time;
 	
 
 	/**
-	 * @return the pdf_application_number
+	 * @return the inp_app_pdf_application_number
 	 */
-	public String getPdf_application_number() {
-		return pdf_application_number;
+	public String getInp_app_pdf_application_number() {
+		return inp_app_pdf_application_number;
 	}
 
 	/**
-	 * @param pdf_application_number the pdf_application_number to set
+	 * @param inp_app_pdf_application_number the inp_app_pdf_application_number to set
 	 */
-	public void setPdf_application_number(String pdf_application_number) {
-		this.pdf_application_number = pdf_application_number;
+	public void setInp_app_pdf_application_number(String pdf_application_number) {
+		this.inp_app_pdf_application_number = pdf_application_number;
 	}
 
 	/**
@@ -1404,17 +1404,17 @@ public class CommunityEmsPDFFieldNames {
 	}
 
 	/**
-	 * @return the file_date_time
+	 * @return the inp_app_file_date_time
 	 */
-	public String getFile_date_time() {
-		return file_date_time;
+	public String getInp_app_file_date_time() {
+		return inp_app_file_date_time;
 	}
 
 	/**
-	 * @param file_date_time the file_date_time to set
+	 * @param inp_app_file_date_time the inp_app_file_date_time to set
 	 */
-	public void setFile_date_time(String file_date_time) {
-		this.file_date_time = file_date_time;
+	public void setFile_date_time(String inp_app_file_date_time) {
+		this.inp_app_file_date_time = inp_app_file_date_time;
 	}
 
 	/**
@@ -1479,8 +1479,8 @@ public class CommunityEmsPDFFieldNames {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CommunityEmsPDFFieldNames [pdf_application_number=");
-		builder.append(pdf_application_number);
+		builder.append("CommunityEmsPDFFieldNames [inp_app_pdf_application_number=");
+		builder.append(inp_app_pdf_application_number);
 		builder.append(", inp_app_category=");
 		builder.append(inp_app_category);
 		builder.append(", inp_evidence_support=");
@@ -1629,8 +1629,8 @@ public class CommunityEmsPDFFieldNames {
 		builder.append(inp_sec4_attest_sign_person_name_2);
 		builder.append(", inp_sec4_attest_sign_person_title_2=");
 		builder.append(inp_sec4_attest_sign_person_title_2);
-		builder.append(", file_date_time=");
-		builder.append(file_date_time);
+		builder.append(", inp_app_file_date_time=");
+		builder.append(inp_app_file_date_time);
 		builder.append("]");
 		return builder.toString();
 	}

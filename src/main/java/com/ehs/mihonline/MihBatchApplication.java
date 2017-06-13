@@ -69,7 +69,7 @@ public class MihBatchApplication  implements CommandLineRunner{
 										} );
 	}
 	
-	public void loadFile(File file, FileOwnerAttributeView attributes) throws Exception
+	public void loadFile(File file, FileOwnerAttributeView attributes) 
 	{
 		
 		FileDetails fd=null;
@@ -84,7 +84,7 @@ public class MihBatchApplication  implements CommandLineRunner{
 		formKeyValue.put("File_owner_name", userprincipal.getName());
 		formKeyValue.put("File_name", file.getName());
 		 
-		 fd = new FileDetails(0, formKeyValue.get(fieldNames.getPdf_application_number()), file.getName(), userprincipal.getName(), new Date(), "ERROR", null);
+		 fd = new FileDetails(0, formKeyValue.get(fieldNames.getInp_app_pdf_application_number()), file.getName(), userprincipal.getName(), new Date(), "ERROR", null);
 		 String appType = formKeyValue.get("inp_app_category");
 		 if(appType == null || !validatePdfFormValue(appType, missingFields)) { 			 
 			fd.setUploadComments(missingFields.toString());
@@ -95,13 +95,13 @@ public class MihBatchApplication  implements CommandLineRunner{
 		 //file.renameTo(new File("C:\\Users\\vsubramaniyan\\workspace\\JavaPDF\\pdf_processing\\PROCESSED\\"+formKeyValue.get(fieldNames.getPdf_application_number()) + ".pdf"));
 		 
 		 //TODO comment should be removed
-		 file.renameTo(new File("O:\\MIH\\Process\\"+formKeyValue.get(fieldNames.getPdf_application_number()) + ".pdf"));
+		 file.renameTo(new File("O:\\MIH\\Import\\"+formKeyValue.get(fieldNames.getInp_app_pdf_application_number()) + ".pdf"));
 		 
 		 //mihEmail.send();
 		 }
 		 catch(Exception ex){
 			 if(file != null)
-			 file.renameTo(new File("O:\\MIH\\Errors\\"+formKeyValue.get(fieldNames.getPdf_application_number()) + ".pdf"));
+			 file.renameTo(new File("O:\\MIH\\Errors\\"+formKeyValue.get(fieldNames.getInp_app_pdf_application_number()) + ".pdf"));
 			 
 			 if(fileDetailsRepository != null && fd !=null)
 			 fileDetailsRepository.saveAndFlush(fd);
@@ -110,7 +110,13 @@ public class MihBatchApplication  implements CommandLineRunner{
 		 }
 		finally
 		{
-			doc.close();
+			if(doc != null)
+			try{	
+				doc.close();
+			}
+			catch(Exception e ){
+				e.printStackTrace();
+			}
 		}
 		logger.debug("Completed loading the applications");
 	}
