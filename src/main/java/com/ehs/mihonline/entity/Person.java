@@ -4,7 +4,6 @@
 package com.ehs.mihonline.entity;
 
 
-import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

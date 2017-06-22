@@ -3,12 +3,33 @@ package com.ehs.mihonline.dto;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:pdffieldmapping.properties")
-public class CommunityEmsPDFFieldNames {
+@PropertySources({@PropertySource("classpath:pdffieldmapping.properties"), @PropertySource("classpath:mihapp.properties")})
+public class MIHConstantproperties {
 
+	@Value("${mih_inp_dir}")
+	private String mihInputDirectory;
+	
+	@Value("${mih_process_dir}")
+	private String mihProcessedDir;
+	
+	@Value("${mih_error_dir}")
+	private String mihErrorDir;
+	
+
+	@Value("${mih_pdf_extension}")
+	private String mhPdfExtension;
+	
+
+	@Value("${mih_error_field_seperator}")
+	private String mihErrorFieldsSeperator;
+	
+	@Value("${mih_plain_date_format}")
+	private String mihPlainDateFormat;
+	
 	@Value("${inp_app_pdf_application_number_ro}")
 	private String inp_app_pdf_application_number;
 	
@@ -268,6 +289,97 @@ public class CommunityEmsPDFFieldNames {
 	@Value("${inp_app_file_date_time_ro}")
 	private String  inp_app_file_date_time;
 	
+
+	/**
+	 * @return the mihPlainDateFormat
+	 */
+	public String getMihPlainDateFormat() {
+		return mihPlainDateFormat;
+	}
+
+	/**
+	 * @param mihPlainDateFormat the mihPlainDateFormat to set
+	 */
+	public void setMihPlainDateFormat(String mihPlainDateFormat) {
+		this.mihPlainDateFormat = mihPlainDateFormat;
+	}
+
+	/**
+	 * @return the mhPdfExtension
+	 */
+	public String getMhPdfExtension() {
+		return mhPdfExtension;
+	}
+
+	/**
+	 * @param mhPdfExtension the mhPdfExtension to set
+	 */
+	public void setMhPdfExtension(String mhPdfExtension) {
+		this.mhPdfExtension = mhPdfExtension;
+	}
+
+	/**
+	 * @return the mihErrorFieldsSeperator
+	 */
+	public String getMihErrorFieldsSeperator() {
+		return mihErrorFieldsSeperator;
+	}
+
+	/**
+	 * @param mihErrorFieldsSeperator the mihErrorFieldsSeperator to set
+	 */
+	public void setMihErrorFieldsSeperator(String mihErrorFieldsSeperator) {
+		this.mihErrorFieldsSeperator = mihErrorFieldsSeperator;
+	}
+
+	/**
+	 * @return the mihInputDirectory
+	 */
+	public String getMihInputDirectory() {
+		return mihInputDirectory;
+	}
+
+	/**
+	 * @param mihInputDirectory the mihInputDirectory to set
+	 */
+	public void setMihInputDirectory(String mih_error_dir) {
+		this.mihInputDirectory = mih_error_dir;
+	}
+
+	/**
+	 * @return the mihProcessedDir
+	 */
+	public String getMihProcessedDir() {
+		return mihProcessedDir;
+	}
+
+	/**
+	 * @param mihProcessedDir the mihProcessedDir to set
+	 */
+	public void setMihProcessedDir(String mihProcessedDir) {
+		this.mihProcessedDir = mihProcessedDir;
+	}
+
+	/**
+	 * @return the mih_inp_dir
+	 */
+	public String getMihErrorDir() {
+		return mihErrorDir;
+	}
+
+	/**
+	 * @param mih_inp_dir the mih_inp_dir to set
+	 */
+	public void setMihErrorDir(String mihErrorDir) {
+		this.mihErrorDir = mihErrorDir;
+	}
+
+	/**
+	 * @param inp_app_file_date_time the inp_app_file_date_time to set
+	 */
+	public void setInp_app_file_date_time(String inp_app_file_date_time) {
+		this.inp_app_file_date_time = inp_app_file_date_time;
+	}
 
 	/**
 	 * @return the inp_app_pdf_application_number
@@ -1479,7 +1591,7 @@ public class CommunityEmsPDFFieldNames {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CommunityEmsPDFFieldNames [inp_app_pdf_application_number=");
+		builder.append("MIHConstantproperties [inp_app_pdf_application_number=");
 		builder.append(inp_app_pdf_application_number);
 		builder.append(", inp_app_category=");
 		builder.append(inp_app_category);

@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -353,7 +352,7 @@ public class Applications {
 				{
 					case "1": return "Community";
 					case "2": return "MIH";
-					case "3": return "ED Avoidance";
+					case "3": return "EDA";
 				}
 				return applicationType;
 	}

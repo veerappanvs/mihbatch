@@ -2,6 +2,8 @@ logging:
   level:
 #    ROOT: DEBUG   
     org:
+     hibernate: 
+      type: trace 
       springframework:
 #        web: DEBUG   
 #      hibernate: DEBUG   
@@ -15,7 +17,10 @@ spring:
   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver    
  jpa:
   show-sql: true
-#   hibernate:
+  properties: 
+    hibernate: 
+      show_sql: true
+    
 #    ddl-auto: create-drop
  mail:
   properties:
