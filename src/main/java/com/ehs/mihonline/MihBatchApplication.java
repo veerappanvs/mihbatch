@@ -2,10 +2,12 @@ package com.ehs.mihonline;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -24,8 +26,10 @@ import com.ehs.mihonline.entity.FormValidation;
 import com.ehs.mihonline.pdfform.PdfFormReader;
 import com.ehs.mihonline.repository.FileDetailsRepository;
 import com.ehs.mihonline.repository.FormValidationRepository;
+import com.ehs.mihonline.util.FormValidationFailedException;
+import com.ehs.mihonline.util.MIhEmailUtil;
 import com.ehs.mihonline.util.MapCommunityEmsData;
-import com.ehs.mihonline.util.MihEmail;
+import com.ehs.mihonline.util.MihEmail_bak;
 
 /**
  * @author vsubramaniyan
@@ -43,7 +47,7 @@ public class MihBatchApplication  implements CommandLineRunner{
 	MIHConstantproperties	 properties;
 	
 	@Autowired
-	MihEmail mihEmail;
+	MIhEmailUtil mihEmail;
 
 	@Autowired
 	FileDetailsRepository  fileDetailsRepository;
@@ -71,33 +75,46 @@ public class MihBatchApplication  implements CommandLineRunner{
 	
 	public String loadFile(File file, FileOwnerAttributeView attributes) 
 	{
-		
+		String uploadStatus = properties.getMihFileUploadErrorStatus();
 		FileDetails fd=null;
 		PDDocument doc = null;
 		StringJoiner missingFields = new StringJoiner(properties.getMihErrorFieldsSeperator());
+		String targetDir = properties.getMihErrorDir();
+		String targetFileName = file.getName();
+		File targetFile = new File(properties.getMihErrorDir()+file.getName());
 		try {
-		doc = PDDocument.load(file);
-		UserPrincipal userprincipal = attributes.getOwner();
-		System.out.println("Processing File name  =================================>>>>>>>>>>>>>>>"+file.getName());
-		System.out.println("Processing File name  =================================>>>>>>>>>>>>>>>"+userprincipal.getName());
-		formKeyValue = PdfFormReader.listFields(doc);
-		formKeyValue.put("File_owner_name", userprincipal.getName());
-		formKeyValue.put("File_name", file.getName());
-		 
-		 fd = new FileDetails(0, formKeyValue.get(properties.getInp_app_pdf_application_number()), file.getName(), userprincipal.getName(), new Date(), "ERROR", null);
-		 String appType = formKeyValue.get("inp_app_category");
-		 if(appType == null || !validatePdfFormValue(appType, missingFields)) { 			 
-			fd.setUploadComments(missingFields.toString());
-			 throw new Exception("Form Validation Failed- Missing Fields : "+missingFields);
-		 }
-		 mapCommunityEmsData.mapDatatoModel(formKeyValue, fd);
-		 
-		 //file.renameTo(new File("C:\\Users\\vsubramaniyan\\workspace\\JavaPDF\\pdf_processing\\PROCESSED\\"+formKeyValue.get(properties.getPdf_application_number()) + ".pdf"));
-		 
-		 //TODO comment should be removed
-
-		 //mihEmail.send();
-		 }
+				doc = PDDocument.load(file);
+				UserPrincipal userprincipal = attributes.getOwner();
+				System.out.println("Processing File name  =================================>>>>>>>>>>>>>>>"+file.getName());
+				//System.out.println("Processing File name  =================================>>>>>>>>>>>>>>>"+userprincipal.getName());
+				logger.debug("Processing File >>>>>>>>>>>>>>> "+file.getName()+"Created by >>>>>>>>>>>>>>> "+userprincipal.getName());
+				formKeyValue = PdfFormReader.listFields(doc);
+				formKeyValue.put("File_owner_name", userprincipal.getName());
+				formKeyValue.put("File_name", file.getName());
+				String pdfAppNumber =  formKeyValue.get(properties.getInp_app_pdf_application_number());
+				fd = new FileDetails(0, pdfAppNumber, file.getName(), userprincipal.getName(), new Date(), uploadStatus, null);
+				String appType = formKeyValue.get(properties.getInp_app_category());
+				if(appType == null || !validatePdfFormValue(appType, missingFields)) { 			 
+					fd.setUploadComments("Missing Fields: "+missingFields.toString());
+					throw new FormValidationFailedException("Missing Fields: "+missingFields);
+				}
+				 
+				mapCommunityEmsData.mapDatatoModel(formKeyValue, fd);
+				targetFileName=pdfAppNumber+ properties.getMhPdfExtension().substring(1);
+				targetDir=properties.getMihProcessedDir();
+				File tempTargetFile = new File(targetDir+targetFileName);
+				if(!tempTargetFile.exists()) {
+					uploadStatus=properties.getMihFileUploadSucStatus();
+				 	fd.setUploadStatus(uploadStatus);
+				 	targetFile = tempTargetFile;
+				}
+				else {
+				 fd.setUploadComments(properties.getMihDupFileErrorMes());
+				}
+				 
+				//TODO
+				mihEmail.sendEmail(properties.getMihEmail1(), "Processed files", "Files are uploaded the following files has some issues");
+			}
 		//TODO Excpetion messages should be changed accordingly
 		 catch(Exception ex){
 			 
@@ -105,19 +122,23 @@ public class MihBatchApplication  implements CommandLineRunner{
 		 }
 		finally
 		{	
-			if(doc != null)
+			if(doc != null && file != null)
 			try{	
 				doc.close();
 				if( fileDetailsRepository != null && fd !=null) {
 					 fileDetailsRepository.saveAndFlush(fd);
 				}
+				 Files.copy(file.toPath(), targetFile.toPath());
+				 System.out.println("Copied file to the destination directory"+targetFile);
+				 file.deleteOnExit();
 			}
 			catch(Exception e ){
 				e.printStackTrace();
 			}
 		}
+		
 		logger.debug("Completed loading the applications");
-		return fd.getUploadStatus();
+		return uploadStatus;
 	}
 
 	

@@ -69,8 +69,8 @@ public class MapCommunityEmsData {
 		 Applications appl = mapApplicationToModel();
 		 mapAmbulancetoModel();
 		 fd.setApplicationId(appl.getAppId());
-		 fd.setUploadStatus("SUCCESS");
 		 fileDetailsRepository.saveAndFlush(fd);
+		 formKeyValue.put(appl.getUniquePDFAppId(), String.valueOf(appl.getAppId()));
 		 
 	}
 	
@@ -151,7 +151,6 @@ public class MapCommunityEmsData {
 			 							formKeyValue.get(properties.getInp_amb_loca_jursd_1()) , 
 				 						formKeyValue.get(properties.getInp_amb_lic_num_1()),
 				 						formKeyValue.get(properties.getInp_amb_person_name_1()),
-				 						//Long.parseLong(formKeyValue.get(properties.getInp_amb_cont_phone_1())),
 				 						formKeyValue.get(properties.getInp_amb_cont_phone_1()), 
 				 						formKeyValue.get(properties.getInp_amb_cont_email_1())
 				 						);

@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class MihEmail {
+public class MihEmail_bak {
 
-	public MihEmail(){}
+	public MihEmail_bak(){}
 	
 	//@Autowired
     private JavaMailSender javaMailSender = new JavaMailSenderImpl();

@@ -23,12 +23,30 @@ public class MIHConstantproperties {
 	@Value("${mih_pdf_extension}")
 	private String mhPdfExtension;
 	
+	@Value("${mih_email_1}")
+	private String mihEmail1;
+	
+	@Value("${mih_email_2}")
+	private String mihEmail2;
 
+
+	@Value("${mih_email_3}")
+	private String mihEmail3;
+	
 	@Value("${mih_error_field_seperator}")
 	private String mihErrorFieldsSeperator;
 	
+	@Value("${mih_upload_status_success}")
+	private String mihFileUploadSucStatus;
+	
+	@Value("${mih_upload_status_error}")
+	private String mihFileUploadErrorStatus;
+	
 	@Value("${mih_plain_date_format}")
 	private String mihPlainDateFormat;
+	
+	@Value("${mih_error_message_duplicate_file}")
+	private String mihDupFileErrorMes;
 	
 	@Value("${inp_app_pdf_application_number_ro}")
 	private String inp_app_pdf_application_number;
@@ -289,6 +307,90 @@ public class MIHConstantproperties {
 	@Value("${inp_app_file_date_time_ro}")
 	private String  inp_app_file_date_time;
 	
+
+	/**
+	 * @return the mihEmail1
+	 */
+	public String getMihEmail1() {
+		return mihEmail1;
+	}
+
+	/**
+	 * @param mihEmail1 the mihEmail1 to set
+	 */
+	public void setMihEmail1(String mihEmail1) {
+		this.mihEmail1 = mihEmail1;
+	}
+
+	/**
+	 * @return the mihEmail2
+	 */
+	public String getMihEmail2() {
+		return mihEmail2;
+	}
+
+	/**
+	 * @param mihEmail2 the mihEmail2 to set
+	 */
+	public void setMihEmail2(String mihEmail2) {
+		this.mihEmail2 = mihEmail2;
+	}
+
+	/**
+	 * @return the mihEmail3
+	 */
+	public String getMihEmail3() {
+		return mihEmail3;
+	}
+
+	/**
+	 * @param mihEmail3 the mihEmail3 to set
+	 */
+	public void setMihEmail3(String mihEmail3) {
+		this.mihEmail3 = mihEmail3;
+	}
+
+	/**
+	 * @return the mihDupFileErrorMes
+	 */
+	public String getMihDupFileErrorMes() {
+		return mihDupFileErrorMes;
+	}
+
+	/**
+	 * @param mihDupFileErrorMes the mihDupFileErrorMes to set
+	 */
+	public void setMihDupFileErrorMes(String mihDupFileErrorMes) {
+		this.mihDupFileErrorMes = mihDupFileErrorMes;
+	}
+
+	/**
+	 * @return the mihFileUploadSucStatus
+	 */
+	public String getMihFileUploadSucStatus() {
+		return mihFileUploadSucStatus;
+	}
+
+	/**
+	 * @param mihFileUploadSucStatus the mihFileUploadSucStatus to set
+	 */
+	public void setMihFileUploadSucStatus(String mihFileUploadSucStatus) {
+		this.mihFileUploadSucStatus = mihFileUploadSucStatus;
+	}
+
+	/**
+	 * @return the mihFileUploadErrorStatus
+	 */
+	public String getMihFileUploadErrorStatus() {
+		return mihFileUploadErrorStatus;
+	}
+
+	/**
+	 * @param mihFileUploadErrorStatus the mihFileUploadErrorStatus to set
+	 */
+	public void setMihFileUploadErrorStatus(String mihFileUploadErrorStatus) {
+		this.mihFileUploadErrorStatus = mihFileUploadErrorStatus;
+	}
 
 	/**
 	 * @return the mihPlainDateFormat

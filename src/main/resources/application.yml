@@ -3,7 +3,7 @@ logging:
 #    ROOT: DEBUG   
     org:
      hibernate: 
-      type: trace 
+      type: debug 
       springframework:
 #        web: DEBUG   
 #      hibernate: DEBUG   
