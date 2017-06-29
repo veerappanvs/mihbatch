@@ -53,7 +53,7 @@ public class Applications {
 			Person primaryMedicalDirectorId, Date proposedprogramStartDate, int noOfEms, int noOfEMT,
 			String affiliatedHealthCareOrg, String formType, String applicationType, Date createdDate,
 			Date modifiedDate, String updatedBy, Date fileSubmissionDate, String overallWorkflowStatus,
-			Date workflowStartDate, Date workflowCompletedDate, Set<WorkFlowDetails> workflowDetails) {
+			Date workflowStartDate, Date workflowCompletedDate, Set<WorkFlowDetails> workflowDetails, String previousPDFAppid, Set<ReviewerComments> reviewerComments) {
 		super();
 		this.uniquePDFAppId = uniquePDFAppId;
 		this.organization = organization;
@@ -74,6 +74,8 @@ public class Applications {
 		this.workflowStartDate = workflowStartDate;
 		this.workflowCompletedDate = workflowCompletedDate;
 		this.workflowDetails = workflowDetails;
+		this.previousPDFAppid = previousPDFAppid;
+		this.reviewerComments = reviewerComments;
 	}
 
 	public Applications(){
@@ -83,11 +85,11 @@ public class Applications {
 	private int appId;
 	private String uniquePDFAppId;
 	private Organization organization;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy HH:mm a")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy")
 	private Date submissionDate;
 	private Person contactPersonId;
 	private Person primaryMedicalDirectorId;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy HH:mm a")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy")
 	private Date proposedprogramStartDate;
 	private int noOfEms;
 	private int noOfEMT;
@@ -97,14 +99,16 @@ public class Applications {
 	private Date createdDate;
 	private Date modifiedDate;
 	private String updatedBy;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy HH:mm a")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy")
 	private Date fileSubmissionDate;
 	private String overallWorkflowStatus;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy HH:mm a")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy")
 	private Date workflowStartDate;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy HH:mm a")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy")
 	private Date workflowCompletedDate;
 	private Set<WorkFlowDetails>  workflowDetails;
+	private String previousPDFAppid;
+	private Set<ReviewerComments>  reviewerComments;
 	
 	
 	
@@ -484,6 +488,37 @@ public class Applications {
 		this.workflowCompletedDate = workflowCompletedDate;
 	}
 	
+	/**
+	 * @return the previousPDFAppid
+	 */
+	@Column(name="previous_app_id")
+	public String getPreviousPDFAppid() {
+		return previousPDFAppid;
+	}
+
+	/**
+	 * @param previousPDFAppid the previousPDFAppid to set
+	 */
+	public void setPreviousPDFAppid(String previousPDFAppid) {
+		this.previousPDFAppid = previousPDFAppid;
+	}
+
+	/**
+	 * @return the reviewerComments
+	 */
+	@OneToMany(orphanRemoval=true)
+	@JoinColumn(name="Application_Id")
+	public Set<ReviewerComments> getReviewerComments() {
+		return reviewerComments;
+	}
+
+	/**
+	 * @param reviewerComments the reviewerComments to set
+	 */
+	public void setReviewerComments(Set<ReviewerComments> reviewerComments) {
+		this.reviewerComments = reviewerComments;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -503,16 +538,19 @@ public class Applications {
 		result = prime * result + noOfEms;
 		result = prime * result + ((organization == null) ? 0 : organization.hashCode());
 		result = prime * result + ((overallWorkflowStatus == null) ? 0 : overallWorkflowStatus.hashCode());
+		result = prime * result + ((previousPDFAppid == null) ? 0 : previousPDFAppid.hashCode());
 		result = prime * result + ((primaryMedicalDirectorId == null) ? 0 : primaryMedicalDirectorId.hashCode());
 		result = prime * result + ((proposedprogramStartDate == null) ? 0 : proposedprogramStartDate.hashCode());
+		result = prime * result + ((reviewerComments == null) ? 0 : reviewerComments.hashCode());
 		result = prime * result + ((submissionDate == null) ? 0 : submissionDate.hashCode());
 		result = prime * result + ((uniquePDFAppId == null) ? 0 : uniquePDFAppId.hashCode());
 		result = prime * result + ((updatedBy == null) ? 0 : updatedBy.hashCode());
 		result = prime * result + ((workflowCompletedDate == null) ? 0 : workflowCompletedDate.hashCode());
+		result = prime * result + ((workflowDetails == null) ? 0 : workflowDetails.hashCode());
 		result = prime * result + ((workflowStartDate == null) ? 0 : workflowStartDate.hashCode());
 		return result;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -600,6 +638,13 @@ public class Applications {
 		} else if (!overallWorkflowStatus.equals(other.overallWorkflowStatus)) {
 			return false;
 		}
+		if (previousPDFAppid == null) {
+			if (other.previousPDFAppid != null) {
+				return false;
+			}
+		} else if (!previousPDFAppid.equals(other.previousPDFAppid)) {
+			return false;
+		}
 		if (primaryMedicalDirectorId == null) {
 			if (other.primaryMedicalDirectorId != null) {
 				return false;
@@ -612,6 +657,13 @@ public class Applications {
 				return false;
 			}
 		} else if (!proposedprogramStartDate.equals(other.proposedprogramStartDate)) {
+			return false;
+		}
+		if (reviewerComments == null) {
+			if (other.reviewerComments != null) {
+				return false;
+			}
+		} else if (!reviewerComments.equals(other.reviewerComments)) {
 			return false;
 		}
 		if (submissionDate == null) {
@@ -642,6 +694,13 @@ public class Applications {
 		} else if (!workflowCompletedDate.equals(other.workflowCompletedDate)) {
 			return false;
 		}
+		if (workflowDetails == null) {
+			if (other.workflowDetails != null) {
+				return false;
+			}
+		} else if (!workflowDetails.equals(other.workflowDetails)) {
+			return false;
+		}
 		if (workflowStartDate == null) {
 			if (other.workflowStartDate != null) {
 				return false;
@@ -651,7 +710,7 @@ public class Applications {
 		}
 		return true;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -696,13 +755,14 @@ public class Applications {
 		builder.append(workflowStartDate);
 		builder.append(", workflowCompletedDate=");
 		builder.append(workflowCompletedDate);
+		builder.append(", workflowDetails=");
+		builder.append(workflowDetails);
+		builder.append(", previousPDFAppid=");
+		builder.append(previousPDFAppid);
+		builder.append(", reviewerComments=");
+		builder.append(reviewerComments);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
-
-	
 	
 }

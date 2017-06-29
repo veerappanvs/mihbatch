@@ -14,7 +14,7 @@ import com.ehs.mihonline.entity.FormValidation;
 @Repository
 public interface FormValidationRepository extends JpaRepository<FormValidation, Integer>{
 	
-	List<FormValidation> findAllByAppType(int appType);
+	//List<FormValidation> findAllByAppType(int appType);
 	//List<FormValidation> findAllByAppType(int appType);
 }
 

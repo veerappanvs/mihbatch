@@ -1,18 +1,19 @@
 logging:
+  file: O:\MIH\logs\MIHOnline.log
   level:
-#    ROOT: DEBUG   
-    org:
-     hibernate: 
-      type: debug 
-      springframework:
+   ROOT: ERROR   
+   org.springframework.data: DEBUG
+   com.ehs.mihonline: DEBUG
+   org.hibernate: ERROR 
+#      type: debug 
 #        web: DEBUG   
-#      hibernate: DEBUG   
+#      hibernate: DEBUG  
 ---
 spring:
  profiles: local,default
  datasource:
   url: jdbc:sqlserver://10.200.7.220:1433;databaseName=MIH;integratedSecurity=true;
-  username: vsubramaniyan
+  username: 
   password:
   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver    
  jpa:
@@ -29,23 +30,19 @@ spring:
      connecttimeout: 5000
      timeout: 3000
      writetimeout: 5000
-
-logging:
- file:
-  logs/MIHOnline.log
 ---
 spring:
   profiles: prod
   datasource:
    url: jdbc:sqlserver://10.200.7.220:1433;databaseName=MIH;integratedSecurity=true;
-   username: vsubramaniyan
+   username: 
    password:
    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver    
   jpa:
    show-sql: true
 logging:
  file:
-  logs/MIHOnline.log
+  O:\MIH\logs\MIHOnline.log
 #   hibernate:
 #    dialect: SQLServer2012Dialect
 #     hbm2ddl:

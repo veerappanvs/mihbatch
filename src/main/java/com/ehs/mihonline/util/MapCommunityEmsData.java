@@ -56,22 +56,19 @@ public class MapCommunityEmsData {
 	@Transactional
 	public void mapDatatoModel(Map<String, String> formKeyValue, FileDetails fd) throws NumberFormatException, ParseException{
 		
+		
 		 sdf = new SimpleDateFormat(properties.getMihPlainDateFormat());
 		 //properties = new MIHConstantproperties();
 		 this.formKeyValue=formKeyValue;
 		 pdfApplicationId=formKeyValue.get(properties.getInp_app_pdf_application_number());
-		 logger.debug("Processing application ID================>"+pdfApplicationId);
 		 formKeyValue.get(properties.getInp_date_submission());
-		 logger.debug("Input Date of submission================>"+properties.getInp_date_submission());
-		 logger.debug("Cli Phone================>"+properties.getInp_sec1_person_cli_phone());
-		 
 		 
 		 Applications appl = mapApplicationToModel();
 		 mapAmbulancetoModel();
 		 fd.setApplicationId(appl.getAppId());
 		 fileDetailsRepository.saveAndFlush(fd);
 		 formKeyValue.put(appl.getUniquePDFAppId(), String.valueOf(appl.getAppId()));
-		 
+		 logger.debug("Data Model Mapped");
 	}
 	
 	
@@ -83,20 +80,20 @@ public class MapCommunityEmsData {
 											 formKeyValue.get(properties.getInp_org_address_city()), 
 											 formKeyValue.get(properties.getInp_org_address_state()), 
 											 formKeyValue.get(properties.getInp_org_address_zip()));
-		 System.out.println("Org --> "+org);
+		// logger.debug("Org --> "+org);
 		 Person contactPersonId = new Person(formKeyValue.get(properties.getInp_sec1_person_name()), 
 											 formKeyValue.get(properties.getInp_sec1_person_title()), 
 											 //Long.parseLong(formKeyValue.get(properties.getInp_sec1_person_phone())), 
 											 formKeyValue.get(properties.getInp_sec1_person_phone()), 
 											 formKeyValue.get(properties.getInp_sec1_person_email()), "External");
-		 System.out.println("contactPersonId --> "+contactPersonId);
+		// logger.debug("ContactPerson Details  --> "+contactPersonId);
 		 Person primaryMedicalDirectorId = new Person(formKeyValue.get(properties.getInp_sec1_person_cli_name()), 
 														formKeyValue.get(properties.getInp_sec1_person_cli_title()), 
 														//Long.parseLong(formKeyValue.get(properties.getInp_sec1_person_cli_phone())),
 														 formKeyValue.get(properties.getInp_sec1_person_cli_phone()), 
 														formKeyValue.get(properties.getInp_sec1_person_cli_email()), "External");
 
-		 System.out.println("primaryMedicalDirectorId --> "+primaryMedicalDirectorId);
+		 //logger.debug("PrimaryMedicalDirector Details --> "+primaryMedicalDirectorId);
 		 
 		 Applications appl = new Applications(pdfApplicationId,
 				 								org, 
@@ -115,9 +112,11 @@ public class MapCommunityEmsData {
 				 								new SimpleDateFormat("MM/dd/yyyy").parse(formKeyValue.get(properties.getInp_date_submission())), 
 				 								"PENDING",
 				 								new Date(), 
-				 								null, 
+				 								null,
+				 								null,
+				 								formKeyValue.get(properties.getInp_app_previous_number()),
 				 								null);
-		 System.out.println("appl --> "+appl);
+		 
 		 Set<WorkFlowDetails> workFlowDetailsList = new HashSet<WorkFlowDetails>();
 /*		 workFlowDetailsList.add(new WorkFlowDetails(appl, 1, "APPROVER_1", "PENDING", null, null, null));
 		 workFlowDetailsList.add(new WorkFlowDetails(appl, 2, "APPROVER_2", "PENDING", null, null, null));
@@ -133,11 +132,11 @@ public class MapCommunityEmsData {
 		 
 		 workflowDetailsRepository.saveAll(workFlowDetailsList);
 		 
-		 for(Applications appls : applicationsRepository.findAll())
+		/* for(Applications appls : applicationsRepository.findAll())
 		 {
-			 logger.debug("Applications Details"+appls.toString());
-		 }
-		 
+			 logger.debug(appls.toString());
+		 }*/
+		 logger.debug(appl.toString());
 		 return appl;
 	}
 	
@@ -199,14 +198,15 @@ public class MapCommunityEmsData {
 		 if(ambulanceList.size()>0)
 			 	ambulanceRepository.saveAll(ambulanceList);
 		 else
-			 System.out.println("No Ambulance details to save");
-		 for(Ambulance ambl : ambulanceRepository.findAll())
+			 logger.debug("No Ambulance details to save");
+		 /*for(Ambulance ambl : ambulanceRepository.findAll())
 		 {
-			 System.out.println("ambl value"+ambl.toString());
-			 logger.debug("ambl value"+ambl.toString());
-		 }
+			 logger.debug(ambl.toString());
+		 }*/
 		 //if (ambulanceList.size()>0)
 			 //throw new RuntimeException("Test Trascation");
+		 
+		 logger.debug(ambulanceList.toString());
 	}
 
 /*	public void storeFileDetails(){

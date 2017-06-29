@@ -307,6 +307,9 @@ public class MIHConstantproperties {
 	@Value("${inp_app_file_date_time_ro}")
 	private String  inp_app_file_date_time;
 	
+	@Value("${inp_app_previous_number}")
+	private String inp_app_previous_number;
+	
 
 	/**
 	 * @return the mihEmail1
@@ -1685,6 +1688,20 @@ public class MIHConstantproperties {
 	 */
 	public void setInp_amb_cont_email_4(String inp_amb_cont_email_4) {
 		this.inp_amb_cont_email_4 = inp_amb_cont_email_4;
+	}
+
+	/**
+	 * @return the inp_app_previous_number
+	 */
+	public String getInp_app_previous_number() {
+		return inp_app_previous_number;
+	}
+
+	/**
+	 * @param inp_app_previous_number the inp_app_previous_number to set
+	 */
+	public void setInp_app_previous_number(String inp_app_previous_number) {
+		this.inp_app_previous_number = inp_app_previous_number;
 	}
 
 	/* (non-Javadoc)

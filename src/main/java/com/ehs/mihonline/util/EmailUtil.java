@@ -1,11 +1,7 @@
 package com.ehs.mihonline.util;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -17,12 +13,18 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import com.ehs.mihonline.exception.MailSendFailureException;
+
+
 @Component
-public class MIhEmailUtil {
+public class EmailUtil {
+	private static final Logger logger = LoggerFactory.getLogger(EmailUtil.class);
 
 	/**
 	 * Utility method to send simple HTML email
@@ -37,6 +39,7 @@ public class MIhEmailUtil {
 	public void sendEmail(String toEmail, String subject, String body) throws MailSendFailureException{
 		try
 	    {
+			
 		    String smtpHostServer = "ITD-SMTP-OUT.state.ma.us";
 		    String emailID = "MIH.COMMUNITYEMS@MassMail.State.MA.US";
 		    String ccEmailID = "Veerappan.Subramaniyan@MassMail.State.MA.US";
@@ -69,10 +72,10 @@ public class MIhEmailUtil {
 
 	      msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
 	      msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmailID, false));
-	      System.out.println("Message is ready");
+	      logger.debug("Email is ready to send");
     	  Transport.send(msg);  
 
-	      System.out.println("EMail Sent Successfully!!");
+	      logger.debug("Email Sent Successfully!!");
 	    }
 	    catch (Exception e) {
 	      throw new MailSendFailureException("Unable to send mail");

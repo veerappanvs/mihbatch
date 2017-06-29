@@ -3,10 +3,15 @@ package com.ehs.mihonline.pdfform;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.interactive.form.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 import java.util.*;
 
 public class PdfFormReader {
 
+	private static Logger logger = 	LoggerFactory.getLogger(PdfFormReader.class);
     public static Map<String, String> listFields(PDDocument doc) throws Exception {
         PDDocumentCatalog catalog = doc.getDocumentCatalog();
         PDAcroForm form = catalog.getAcroForm();
@@ -27,7 +32,7 @@ public class PdfFormReader {
          Iterator<PDField>  it = form.getFieldIterator() ;
          while (it.hasNext()) {
         	PDField pf = it.next();
-        	System.out.println(pf.getFieldType() + "->" + pf.getFullyQualifiedName()  + " = "+pf.getValueAsString());
+        	logger.debug(pf.getFieldType() + "=>" + pf.getFullyQualifiedName()  + "= "+pf.getValueAsString());
         	formKeyValue.put(pf.getFullyQualifiedName(), pf.getValueAsString());
         	
         }
