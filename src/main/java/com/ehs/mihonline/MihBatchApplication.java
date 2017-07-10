@@ -127,32 +127,35 @@ public class MihBatchApplication  implements CommandLineRunner{
 				targetDir=properties.getMihProcessedDir();
 				File tempTargetFile = new File(targetDir+targetFileName);
 				if(!tempTargetFile.exists()) {
+					
+					String appType = formKeyValue.get(properties.getInp_app_category());
+					if(appType == null || !validatePdfFormValue(appType, missingFields)) { 			 
+						throw new FormValidationFailedException("Missing Fields: "+missingFields);
+					}					 
+					mapCommunityEmsData.mapDatatoModel(formKeyValue, fd);
+					
 					uploadStatus=properties.getMihFileUploadSucStatus();
 				 	fd.setUploadStatus(uploadStatus);
 				 	targetFile = tempTargetFile;
 				}
 				else {
 					targetFileExists=true;
-					fd.setUploadComments(properties.getMihDupFileErrorMes());
 					throw new TargetFileExistsException("Application Already Processed");
 					
 				}
 				
-				String appType = formKeyValue.get(properties.getInp_app_category());
-				if(appType == null || !validatePdfFormValue(appType, missingFields)) { 			 
-					fd.setUploadComments("Missing Fields: "+missingFields.toString());
-					throw new FormValidationFailedException("Missing Fields: "+missingFields);
-				}
-				 
-				mapCommunityEmsData.mapDatatoModel(formKeyValue, fd);
+				
 				 
 				//TODO
 				//mihEmail.sendEmail(properties.getMihEmail1(), "Processed files", "Files are uploaded the following files has some issues");
 			}
 		//TODO Excpetion messages should be changed accordingly
-		 catch(Exception ex){
-			 
+/*		 catch(TargetFileExistsException  | FormValidationFailedException ex){
 			 ex.printStackTrace();
+		 }*/
+		 catch(Exception ex){
+			 ex.printStackTrace();
+			 fd.setUploadComments(ex.getMessage());
 		 }
 		finally
 		{	
@@ -164,11 +167,12 @@ public class MihBatchApplication  implements CommandLineRunner{
 					 logger.debug("Saved File Upload status "+fd.toString());
 				}
 				
-				if(!targetFileExists) {
+				//if(!targetFileExists) {
 				 Files.copy(file.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 				 logger.debug("Copied file to the destination directory "+targetFile);
 				 file.deleteOnExit();
-				}
+				 //file.delete();
+				//}
 			}
 			catch(Exception e ){
 				e.printStackTrace();

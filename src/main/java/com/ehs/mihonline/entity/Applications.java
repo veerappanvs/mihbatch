@@ -50,7 +50,7 @@ public class Applications {
 	 * @param workflowDetails
 	 */
 	public Applications(String uniquePDFAppId, Organization organization, Date submissionDate, Person contactPersonId,
-			Person primaryMedicalDirectorId, Date proposedprogramStartDate, int noOfEms, int noOfEMT,
+			Person primaryMedicalDirectorId, Date proposedprogramStartDate, String noOfEms, String noOfEMT,
 			String affiliatedHealthCareOrg, String formType, String applicationType, Date createdDate,
 			Date modifiedDate, String updatedBy, Date fileSubmissionDate, String overallWorkflowStatus,
 			Date workflowStartDate, Date workflowCompletedDate, Set<WorkFlowDetails> workflowDetails, String previousPDFAppid, Set<ReviewerComments> reviewerComments) {
@@ -91,8 +91,8 @@ public class Applications {
 	private Person primaryMedicalDirectorId;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd-yyyy")
 	private Date proposedprogramStartDate;
-	private int noOfEms;
-	private int noOfEMT;
+	private String noOfEms;
+	private String noOfEMT;
 	private String affiliatedHealthCareOrg;
 	private String FormType;
 	private String applicationType;
@@ -155,7 +155,7 @@ public class Applications {
 	/**
 	 * @return the uniquePDFAppId
 	 */
-	@Column(name = "Unique_Id")
+	@Column(name = "Unique_Pdf_App_Id")
 	public String getUniquePDFAppId() {
 		return uniquePDFAppId;
 	}
@@ -275,7 +275,7 @@ public class Applications {
 	 * @return the noOfEms
 	 */
 	@Column(name = "No_of_EMS")
-	public int getNoOfEms() {
+	public String getNoOfEms() {
 		return noOfEms;
 	}
 
@@ -284,7 +284,7 @@ public class Applications {
 	/**
 	 * @param noOfEms the noOfEms to set
 	 */
-	public void setNoOfEms(int noOfEms) {
+	public void setNoOfEms(String noOfEms) {
 		this.noOfEms = noOfEms;
 	}
 
@@ -294,7 +294,7 @@ public class Applications {
 	 * @return the noOfEMT
 	 */
 	@Column(name = "No_of_EMT")
-	public int getNoOfEMT() {
+	public String getNoOfEMT() {
 		return noOfEMT;
 	}
 
@@ -303,7 +303,7 @@ public class Applications {
 	/**
 	 * @param noOfEMT the noOfEMT to set
 	 */
-	public void setNoOfEMT(int noOfEMT) {
+	public void setNoOfEMT(String noOfEMT) {
 		this.noOfEMT = noOfEMT;
 	}
 
@@ -534,8 +534,8 @@ public class Applications {
 		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result + ((fileSubmissionDate == null) ? 0 : fileSubmissionDate.hashCode());
 		result = prime * result + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
-		result = prime * result + noOfEMT;
-		result = prime * result + noOfEms;
+		result = prime * result + ((noOfEMT == null) ? 0 : noOfEMT.hashCode());
+		result = prime * result + ((noOfEms == null) ? 0 : noOfEms.hashCode());
 		result = prime * result + ((organization == null) ? 0 : organization.hashCode());
 		result = prime * result + ((overallWorkflowStatus == null) ? 0 : overallWorkflowStatus.hashCode());
 		result = prime * result + ((previousPDFAppid == null) ? 0 : previousPDFAppid.hashCode());
@@ -618,10 +618,18 @@ public class Applications {
 		} else if (!modifiedDate.equals(other.modifiedDate)) {
 			return false;
 		}
-		if (noOfEMT != other.noOfEMT) {
+		if (noOfEMT == null) {
+			if (other.noOfEMT != null) {
+				return false;
+			}
+		} else if (!noOfEMT.equals(other.noOfEMT)) {
 			return false;
 		}
-		if (noOfEms != other.noOfEms) {
+		if (noOfEms == null) {
+			if (other.noOfEms != null) {
+				return false;
+			}
+		} else if (!noOfEms.equals(other.noOfEms)) {
 			return false;
 		}
 		if (organization == null) {
@@ -764,5 +772,6 @@ public class Applications {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
+
 }

@@ -33,7 +33,7 @@ public class FileDetails {
 			String uploadStatus, String uploadComments) {
 		super();
 		this.applicationId = applicationId;
-		this.uniqueid = uniqueid;
+		this.uniquePdfAppid = uniqueid;
 		this.fileName = fileName;
 		this.createdBy = createdBy;
 		this.createdTime = createdTime;
@@ -43,7 +43,7 @@ public class FileDetails {
 	
 	private int fileId;
 	private int applicationId;
-	private String uniqueid;
+	private String uniquePdfAppid;
 	private String fileName;
 	private String createdBy;
 	private Date createdTime;
@@ -81,15 +81,15 @@ public class FileDetails {
 	/**
 	 * @return the uniqueid
 	 */
-	@Column(name="Unique_id")
-	public String getUniqueid() {
-		return uniqueid;
+	@Column(name="Unique_Pdf_App_Id")
+	public String getUniquePdfAppid() {
+		return uniquePdfAppid;
 	}
 	/**
 	 * @param uniqueid the uniqueid to set
 	 */
-	public void setUniqueid(String uniqueid) {
-		this.uniqueid = uniqueid;
+	public void setUniquePdfAppid(String uniquePdfAppid) {
+		this.uniquePdfAppid = uniquePdfAppid;
 	}
 	/**
 	 * @return the fileName
@@ -168,7 +168,7 @@ public class FileDetails {
 		result = prime * result + ((createdTime == null) ? 0 : createdTime.hashCode());
 		result = prime * result + fileId;
 		result = prime * result + ((fileName == null) ? 0 : fileName.hashCode());
-		result = prime * result + ((uniqueid == null) ? 0 : uniqueid.hashCode()); ;
+		result = prime * result + ((uniquePdfAppid == null) ? 0 : uniquePdfAppid.hashCode()); ;
 		result = prime * result + ((uploadComments == null) ? 0 : uploadComments.hashCode());
 		result = prime * result + ((uploadStatus == null) ? 0 : uploadStatus.hashCode());
 		return result;
@@ -215,7 +215,7 @@ public class FileDetails {
 		} else if (!fileName.equals(other.fileName)) {
 			return false;
 		}
-		if (uniqueid != other.uniqueid) {
+		if (uniquePdfAppid != other.uniquePdfAppid) {
 			return false;
 		}
 		if (uploadComments == null) {
@@ -245,7 +245,7 @@ public class FileDetails {
 		builder.append(", applicationId=");
 		builder.append(applicationId);
 		builder.append(", uniqueid=");
-		builder.append(uniqueid);
+		builder.append(uniquePdfAppid);
 		builder.append(", fileName=");
 		builder.append(fileName);
 		builder.append(", createdBy=");
