@@ -53,7 +53,7 @@ public class Applications {
 			Person primaryMedicalDirectorId, Date proposedprogramStartDate, String noOfEms, String noOfEMT,
 			String affiliatedHealthCareOrg, String formType, String applicationType, Date createdDate,
 			Date modifiedDate, String updatedBy, Date fileSubmissionDate, String overallWorkflowStatus,
-			Date workflowStartDate, Date workflowCompletedDate, Set<WorkFlowDetails> workflowDetails, String previousPDFAppid, Set<ReviewerComments> reviewerComments) {
+			Date workflowStartDate, Date workflowCompletedDate, Set<WorkFlowDetails> workflowDetails, String previousPDFAppid, Set<ReviewerComments> reviewerComments, String appResubmitted) {
 		super();
 		this.uniquePDFAppId = uniquePDFAppId;
 		this.organization = organization;
@@ -76,6 +76,7 @@ public class Applications {
 		this.workflowDetails = workflowDetails;
 		this.previousPDFAppid = previousPDFAppid;
 		this.reviewerComments = reviewerComments;
+		this.appResubmitted =appResubmitted;
 	}
 
 	public Applications(){
@@ -109,6 +110,7 @@ public class Applications {
 	private Set<WorkFlowDetails>  workflowDetails;
 	private String previousPDFAppid;
 	private Set<ReviewerComments>  reviewerComments;
+	private String appResubmitted;
 	
 	
 	
@@ -519,6 +521,21 @@ public class Applications {
 		this.reviewerComments = reviewerComments;
 	}
 
+	/**
+	 * @return the appResubmitted
+	 */
+	@Column(name="App_Resubmitted")
+	public String getAppResubmitted() {
+		return appResubmitted;
+	}
+
+	/**
+	 * @param appResubmitted the appResubmitted to set
+	 */
+	public void setAppResubmitted(String appResubmitted) {
+		this.appResubmitted = appResubmitted;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -529,6 +546,7 @@ public class Applications {
 		result = prime * result + ((FormType == null) ? 0 : FormType.hashCode());
 		result = prime * result + ((affiliatedHealthCareOrg == null) ? 0 : affiliatedHealthCareOrg.hashCode());
 		result = prime * result + appId;
+		result = prime * result + ((appResubmitted == null) ? 0 : appResubmitted.hashCode());
 		result = prime * result + ((applicationType == null) ? 0 : applicationType.hashCode());
 		result = prime * result + ((contactPersonId == null) ? 0 : contactPersonId.hashCode());
 		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
@@ -581,6 +599,13 @@ public class Applications {
 			return false;
 		}
 		if (appId != other.appId) {
+			return false;
+		}
+		if (appResubmitted == null) {
+			if (other.appResubmitted != null) {
+				return false;
+			}
+		} else if (!appResubmitted.equals(other.appResubmitted)) {
 			return false;
 		}
 		if (applicationType == null) {
@@ -769,9 +794,10 @@ public class Applications {
 		builder.append(previousPDFAppid);
 		builder.append(", reviewerComments=");
 		builder.append(reviewerComments);
+		builder.append(", appResubmitted=");
+		builder.append(appResubmitted);
 		builder.append("]");
 		return builder.toString();
 	}
-
 
 }

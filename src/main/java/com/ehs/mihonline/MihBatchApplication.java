@@ -20,6 +20,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.ehs.mihonline.dto.MIHConstantproperties;
+import com.ehs.mihonline.entity.Applications;
 import com.ehs.mihonline.entity.FileDetails;
 import com.ehs.mihonline.entity.FormValidation;
 import com.ehs.mihonline.exception.FormValidationFailedException;
@@ -192,9 +193,17 @@ public class MihBatchApplication  implements CommandLineRunner{
 				if (previousAppid == null || previousAppid.trim().equals("")){
 					missingFiledsCsv.add("Previous App Number is empty ");
 				}
-				else if(applicationsRepository.findByUniquePDFAppId(previousAppid) == null) {
-					missingFiledsCsv.add("Previous App Number : "+previousAppid+" does not exist.");	
-				} 
+				else  {
+						Applications appl = applicationsRepository.findByUniquePDFAppId(previousAppid);
+						if(appl == null) {
+							missingFiledsCsv.add("Previous App Number : "+previousAppid+" does not exist.");	
+						}
+						else{//Update the previous app as resubmitted
+							//TODO change the resubmission flow accordingly
+							appl.setAppResubmitted("Y");
+							applicationsRepository.saveAndFlush(appl);
+						}
+				}
 		}
 		else {
 			validations.stream()

@@ -1,5 +1,6 @@
 logging:
   file: O:\MIH\logs\MIHOnline.log
+ # file: D:\Shared\MIH\logs\MIHOnline.log
   level:
    ROOT: ERROR   
    org.springframework.data: DEBUG

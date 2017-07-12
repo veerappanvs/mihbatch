@@ -115,7 +115,7 @@ public class MapCommunityEmsData {
 				 								null,
 				 								null,
 				 								formKeyValue.get(properties.getInp_app_previous_number()),
-				 								null);
+				 								null, "N");
 		 
 		 Set<WorkFlowDetails> workFlowDetailsList = new HashSet<WorkFlowDetails>();
 /*		 workFlowDetailsList.add(new WorkFlowDetails(appl, 1, "APPROVER_1", "PENDING", null, null, null));
